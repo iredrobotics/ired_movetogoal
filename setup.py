@@ -21,7 +21,8 @@ setup(
     license='Apache-2.0',
     entry_points={
         'console_scripts': [
-            'movetogoal = ired_movetogoal.movetogoal:main'
+            'movetogoal = ired_movetogoal.movetogoal:main',
+            'challenge_navigation = ired_movetogoal.challenge_navigation:main',
         ],
     },
 )

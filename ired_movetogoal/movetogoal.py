@@ -36,35 +36,46 @@ def main():
 
     # Define your list of goals (x, y, yaw in radians)
     goals = [
-        make_pose(0.0, 0.0, 0.0),
-        make_pose(0.0, 0.0, 1.57),
-        make_pose(0.0, 0.0, 3.14),
+        make_pose(2.5, 1.5, 1.57),
+        make_pose(1.5, 0.5, 0.0),
+        make_pose(3.5, 3.5, 3.14),
+        make_pose(1.5, 1.5, -1.57),
+        make_pose(2.5, 2.5, 3.14),
+        make_pose(2.5, 1.5, 1.57),
+        make_pose(1.5, 0.5, 0.0),
+        make_pose(3.5, 3.5, 3.14),
+        make_pose(1.5, 1.5, -1.57),
+        make_pose(2.5, 2.5, 3.14),
+        make_pose(2.5, 1.5, 1.57),
+        make_pose(1.5, 0.5, 0.0),
+        make_pose(3.5, 3.5, 3.14),
+        make_pose(1.5, 1.5, -1.57),
+        make_pose(2.5, 2.5, 3.14)
     ]
 
-    for i, goal in enumerate(goals):
-        print(f"\n Sending goal {i+1}: ({goal.pose.position.x}, {goal.pose.position.y})")
+    for goal in goals:
+        print(f"\n Sending goal : ({goal.pose.position.x}, {goal.pose.position.y})")
 
+        navigator.clearAllCostmaps()
         navigator.goToPose(goal)
 
         # Wait for result
         while not navigator.isTaskComplete():
             feedback = navigator.getFeedback()
             if feedback:
-                print(
-                    f"    Distance remaining: {feedback.distance_remaining:.2f} m"
-                )
+                print(f"    Distance remaining: {feedback.distance_remaining:.2f} m")
             rclpy.spin_once(navigator, timeout_sec=0.1)
 
         # Check result
         result = navigator.getResult()
         if result == TaskResult.SUCCEEDED:
-            print(f" Goal {i+1} reached successfully!")
+            print(f" Goal reached successfully!")
             time.sleep(5)
         elif result == TaskResult.CANCELED:
-            print(f" Goal {i+1} canceled. Stopping sequence.")
+            print(f" Goal canceled. Stopping sequence.")
             break
         elif result == TaskResult.FAILED:
-            print(f" Goal {i+1} failed. Stopping sequence.")
+            print(f" Goal failed. Stopping sequence.")
             break
 
     print("\n Navigation sequence finished.")
